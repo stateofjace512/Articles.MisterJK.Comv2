@@ -69,7 +69,7 @@ export default function Navigation() {
 
           <div className="flex items-center space-x-2 sm:space-x-4">
             <a href="https://misterjk.com" className={getNavLinkClasses()}>Home</a>
-            <a href="https://misterjk.com/link" className={getNavLinkClasses()}>Listen</a>
+            <a href="https://misterjk.com/link" className={getNavLinkClasses()}>LinqUp</a>
             <a href="https://misterjk.com/bts" className={getNavLinkClasses()}>BTS</a>
             <a href="https://lyrics.misterjk.com" className={getNavLinkClasses()}>Lyrics</a>
             <a href="/" className={getNavLinkClasses()}>Blog</a>
