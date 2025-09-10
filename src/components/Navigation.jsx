@@ -95,7 +95,7 @@ useEffect(() => {
             {/* Logo/Favicon - Full height with padding */}
             <div className="flex-shrink-0 mr-2 h-full flex items-center">
               <img
-                src="/1favicon.png"
+                src="/favicon.png"
                 alt="MRJK"
                 className="h-full w-auto cursor-pointer py-1"
                 loading="eager"
@@ -134,26 +134,19 @@ useEffect(() => {
               ))}
             </div>
 
-            {/* Mobile Menu Button - Arrow Left */}
+            {/* Mobile Menu Button - Arrow Left with proper skeuomorphic styling */}
             <div className="md:hidden">
               <button
                 onClick={() => setIsMobileMenuOpen(true)}
                 className={`relative inline-flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300 group focus:outline-none focus:ring-2 focus:ring-purple-500/50 ${
                   isDark 
                     ? 'bg-gray-800/60 hover:bg-gray-700/70 text-white border border-gray-700/30' 
-                    : 'bg-gray-100/80 hover:bg-gray-200/80 text-gray-800 border border-gray-300/30'
+                    : 'bg-gradient-to-b from-white to-gray-100 hover:from-gray-50 hover:to-gray-200 text-gray-800 border border-gray-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_2px_6px_rgba(0,0,0,0.15)] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_4px_12px_rgba(0,0,0,0.2)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.1)] active:translate-y-px'
                 }`}
                 aria-expanded={isMobileMenuOpen}
                 aria-label="Open navigation menu"
               >
                 <ChevronLeft className="w-6 h-6 transition-transform duration-200 group-hover:scale-110" />
-                
-                {/* Ripple effect */}
-                <div className={`absolute inset-0 rounded-full transition-all duration-300 ${
-                  isDark 
-                    ? 'group-hover:bg-gray-600/25' 
-                    : 'group-hover:bg-gray-400/25'
-                }`}></div>
               </button>
             </div>
           </div>
@@ -180,7 +173,7 @@ useEffect(() => {
           }`}>
             <div className="flex items-center space-x-3">
               <img
-                src="/1favicon.png"
+                src="/favicon.png"
                 alt="MRJK"
                 className="h-8 w-auto"
                 loading="eager"
@@ -191,10 +184,10 @@ useEffect(() => {
             {/* Close Button - Arrow Right */}
             <button
               onClick={() => setIsMobileMenuOpen(false)}
-              className={`inline-flex items-center justify-center w-12 h-12 rounded-full transition-all duration-300 group focus:outline-none focus:ring-2 focus:ring-purple-500/50 ${
+              className={`inline-flex items-center justify-center w-12 h-12 rounded-full transition-all duration-300 group focus:outline-none focus:ring-2 focus:ring-blue-500/60 ${
                 isDark 
                   ? 'bg-gray-800/60 hover:bg-gray-700/70 text-white border border-gray-700/40' 
-                  : 'bg-white hover:bg-gray-100 text-gray-800 border border-gray-300/40 shadow-sm'
+                  : 'border border-neutral-300 bg-gradient-to-b from-white to-neutral-200 hover:shadow-lg hover:-translate-y-0.5'
               }`}
               aria-label="Close navigation menu"
             >
@@ -212,7 +205,7 @@ useEffect(() => {
                 className={`block px-6 py-5 text-xl font-medium rounded-2xl transition-all duration-300 hover:transform hover:scale-[1.02] relative overflow-hidden group ${isMobileMenuOpen ? 'animate-slide-in' : ''} ${
                   isDark 
                     ? 'hover:bg-gray-800/70 hover:text-gray-100 border border-transparent hover:border-gray-700/30' 
-                    : 'bg-[#fafafa] text-[#111] border border-[#e5e5e5] hover:bg-[#f5f5f5] hover:text-[#000] hover:border-[#d1d1d1] hover:shadow' 
+                    : 'border border-neutral-300 bg-gradient-to-b from-white to-neutral-200 text-neutral-900 hover:shadow-lg hover:-translate-y-0.5'
                 }`}
                 style={{
                   animationDelay: `${index * 100}ms`
@@ -274,4 +267,4 @@ useEffect(() => {
       `}</style>
     </>
   );
-}
+} 
