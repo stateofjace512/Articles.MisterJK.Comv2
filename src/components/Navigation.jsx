@@ -1,9 +1,11 @@
+"use client";
 import React, { useEffect, useState } from "react";
-import { Sun, Moon } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function Navigation() {
   const [isDark, setIsDark] = useState(false);
-  const [currentPath, setCurrentPath] = useState('');
+  const [currentPath, setCurrentPath] = useState("");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // --- helpers for cookies ---
   const setThemeCookie = (theme) => {
@@ -23,25 +25,43 @@ export default function Navigation() {
   // Initialize theme
   useEffect(() => {
     const savedTheme = getThemeCookie();
-    const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const shouldBeDark = savedTheme ? savedTheme === "dark" : systemPrefersDark;
+    const mql = window.matchMedia("(prefers-color-scheme: dark)");
+    const initialDark = savedTheme ? savedTheme === "dark" : mql.matches;
+    setIsDark(initialDark);
+    document.documentElement.classList.toggle("dark-mode", initialDark);
 
-    setIsDark(shouldBeDark);
-    document.documentElement.classList.toggle("dark-mode", shouldBeDark);
-
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    const handleSystemThemeChange = (e) => {
+    const handleChange = (e) => {
       if (!savedTheme) {
         setIsDark(e.matches);
         document.documentElement.classList.toggle("dark-mode", e.matches);
       }
     };
 
-    mediaQuery.addEventListener("change", handleSystemThemeChange);
-    return () => mediaQuery.removeEventListener("change", handleSystemThemeChange);
+    mql.addEventListener("change", handleChange);
+    return () => mql.removeEventListener("change", handleChange);
   }, []);
 
-  // Toggle theme + write cookie
+// Lock body scroll when mobile menu is open
+useEffect(() => {
+  if (isMobileMenuOpen) {
+    document.body.classList.add("overflow-hidden");
+  } else {
+    document.body.classList.remove("overflow-hidden");
+  }
+}, [isMobileMenuOpen]);
+
+useEffect(() => {
+  const handleResize = () => {
+    if (window.innerWidth >= 768) {
+      setIsMobileMenuOpen(false);
+      document.body.classList.remove("overflow-hidden");
+    }
+  };
+  window.addEventListener("resize", handleResize);
+  return () => window.removeEventListener("resize", handleResize);
+}, []);
+
+  // Toggle theme
   const toggleTheme = () => {
     const newTheme = !isDark;
     setIsDark(newTheme);
@@ -49,33 +69,209 @@ export default function Navigation() {
     setThemeCookie(newTheme ? "dark" : "light");
   };
 
-  const getNavLinkClasses = () => {
-    const baseClasses = "px-3 py-2 text-sm font-medium transition-colors duration-200";
-    return `${baseClasses} text-gray-900 rainbow-text-hover`;
+  // Close mobile menu when clicking on a link
+  const handleLinkClick = () => {
+    setIsMobileMenuOpen(false);
   };
 
-  return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-white/40 pointer-events-auto">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          <img
-            src="/favicon.png"
-            alt="MRJK"
-            className="h-16 w-16 object-contain cursor-pointer"
-            loading="eager"
-            decoding="async"
-            onClick={toggleTheme}
-          />
+  // Navigation links data
+  const navLinks = [
+    { href: "https://misterjk.com", label: "Home" },
+    { href: "https://misterjk.com/link", label: "LinqUp" },
+    { href: "https://misterjk.com/bts", label: "BTS" },
+    { href: "https://lyrics.misterjk.com", label: "Lyrics" },
+    { href: "/", label: "Blog" },
+  ];
 
-          <div className="flex items-center space-x-2 sm:space-x-4">
-            <a href="https://misterjk.com" className={getNavLinkClasses()}>Home</a>
-            <a href="https://misterjk.com/link" className={getNavLinkClasses()}>LinqUp</a>
-            <a href="https://misterjk.com/bts" className={getNavLinkClasses()}>BTS</a>
-            <a href="https://lyrics.misterjk.com" className={getNavLinkClasses()}>Lyrics</a>
-            <a href="/" className={getNavLinkClasses()}>Blog</a>
+  return (
+    <>
+      <nav className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b pointer-events-auto transition-all duration-300 ${
+        isDark 
+          ? 'bg-[#101010] border-[#1a1a1a] text-white shadow-lg' 
+          : 'bg-white/95 border-gray-200/60 text-gray-900 shadow-sm'
+      }`}>
+        <div className="max-w-6xl mx-auto px-3 sm:px-4 lg:px-8">
+          <div className="flex justify-between items-center h-14 sm:h-16">
+            {/* Logo/Favicon - Full height with padding */}
+            <div className="flex-shrink-0 mr-2 h-full flex items-center">
+              <img
+                src="/favicon.png"
+                alt="MRJK"
+                className="h-full w-auto cursor-pointer py-1"
+                loading="eager"
+                decoding="async"
+                onClick={toggleTheme}
+              />
+            </div>
+
+            {/* Desktop Navigation */}
+            <div className="hidden lg:flex items-center space-x-6 overflow-x-auto">
+              {navLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className={`px-4 py-2 text-base font-medium rainbow-text-hover whitespace-nowrap flex-shrink-0 relative group transition-all duration-200 ${
+                    isDark ? 'text-white hover:text-gray-200' : 'text-gray-800 hover:text-gray-600'
+                  }`}
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
+
+            {/* Tablet Navigation */}
+            <div className="hidden md:flex lg:hidden items-center space-x-3 overflow-x-auto">
+              {navLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className={`px-3 py-2 text-sm font-medium rainbow-text-hover whitespace-nowrap flex-shrink-0 ${
+                    isDark ? 'text-white hover:text-gray-200' : 'text-gray-800 hover:text-gray-600'
+                  }`}
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
+
+            {/* Mobile Menu Button - Arrow Left */}
+            <div className="md:hidden">
+              <button
+                onClick={() => setIsMobileMenuOpen(true)}
+                className={`relative inline-flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300 group focus:outline-none focus:ring-2 focus:ring-purple-500/50 ${
+                  isDark 
+                    ? 'bg-gray-800/60 hover:bg-gray-700/70 text-white border border-gray-700/30' 
+                    : 'bg-gray-100/80 hover:bg-gray-200/80 text-gray-800 border border-gray-300/30'
+                }`}
+                aria-expanded={isMobileMenuOpen}
+                aria-label="Open navigation menu"
+              >
+                <ChevronLeft className="w-6 h-6 transition-transform duration-200 group-hover:scale-110" />
+                
+                {/* Ripple effect */}
+                <div className={`absolute inset-0 rounded-full transition-all duration-300 ${
+                  isDark 
+                    ? 'group-hover:bg-gray-600/25' 
+                    : 'group-hover:bg-gray-400/25'
+                }`}></div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* Full Screen Mobile Menu Sliding from Left */}
+      <div className={`fixed inset-0 z-50 md:hidden transition-all duration-500 ${isMobileMenuOpen ? 'visible' : 'invisible'}`}>
+
+        
+        {/* Full Screen Sliding Menu Panel */}
+        <div className={`absolute inset-y-0 right-0 w-full shadow-2xl transform transition-all duration-500 ease-out ${
+          isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+        } ${
+          isDark 
+            ? 'bg-[#0a0a0a] text-white border-l border-[#1a1a1a]'
+            : 'bg-[#fdfdfd] text-[#111] border-l border-[#d1d1d1]'
+        }`}>
+
+          
+          {/* Header with Close Button */}
+          <div className={`flex items-center justify-between p-6 border-b ${
+            isDark ? 'border-[#1a1a1a] bg-[#101010]' : 'border-[#d1d1d1] bg-[#ffffff]'
+          }`}>
+            <div className="flex items-center space-x-3">
+              <img
+                src="/favicon.png"
+                alt="MRJK"
+                className="h-8 w-auto"
+                loading="eager"
+                decoding="async"
+              />
+            </div>
+            
+            {/* Close Button - Arrow Right */}
+            <button
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={`inline-flex items-center justify-center w-12 h-12 rounded-full transition-all duration-300 group focus:outline-none focus:ring-2 focus:ring-purple-500/50 ${
+                isDark 
+                  ? 'bg-gray-800/60 hover:bg-gray-700/70 text-white border border-gray-700/40' 
+                  : 'bg-white hover:bg-gray-100 text-gray-800 border border-gray-300/40 shadow-sm'
+              }`}
+              aria-label="Close navigation menu"
+            >
+              <ChevronRight className="w-7 h-7 transition-transform duration-200 group-hover:scale-110" />
+            </button>
+          </div>
+          
+          {/* Menu content */}
+          <div className="p-6 space-y-2 mt-4">
+            {navLinks.map((link, index) => (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={handleLinkClick}
+                className={`block px-6 py-5 text-xl font-medium rounded-2xl transition-all duration-300 hover:transform hover:scale-[1.02] relative overflow-hidden group ${isMobileMenuOpen ? 'animate-slide-in' : ''} ${
+                  isDark 
+                    ? 'hover:bg-gray-800/70 hover:text-gray-100 border border-transparent hover:border-gray-700/30' 
+                    : 'bg-[#fafafa] text-[#111] border border-[#e5e5e5] hover:bg-[#f5f5f5] hover:text-[#000] hover:border-[#d1d1d1] hover:shadow' 
+                }`}
+                style={{
+                  animationDelay: `${index * 100}ms`
+                }}
+              >
+                {/* Hover shimmer effect */}
+                <div className={`absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ${
+                  isDark 
+                    ? 'bg-gradient-to-r from-transparent via-white/10 to-transparent'
+                    : 'bg-gradient-to-r from-transparent via-white/50 to-transparent'
+                }`}></div>
+                
+                <span className="relative z-10 flex items-center justify-between">
+                  {link.label}
+                  <ChevronRight className="w-5 h-5 opacity-0 group-hover:opacity-100 transform translate-x-2 group-hover:translate-x-0 transition-all duration-300" />
+                </span>
+              </a>
+            ))}
           </div>
         </div>
       </div>
-    </nav>
+
+      {/* Custom styles for animations */}
+      <style jsx>{`
+        @keyframes slide-in {
+          from {
+            opacity: 0;
+            transform: translateX(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+
+        
+        .animate-slide-in {
+          animation: slide-in 0.5s ease-out forwards;
+          opacity: 0;
+        }
+        
+        /* Custom scrollbar for overflow areas */
+        .overflow-x-auto::-webkit-scrollbar {
+          height: 4px;
+        }
+        
+        .overflow-x-auto::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        
+        .overflow-x-auto::-webkit-scrollbar-thumb {
+          background: linear-gradient(to right, #a855f7, #ec4899, #ef4444);
+          border-radius: 2px;
+        }
+        
+        .overflow-x-auto::-webkit-scrollbar-thumb:hover {
+          opacity: 0.8;
+        }
+      `}</style>
+    </>
   );
 }
