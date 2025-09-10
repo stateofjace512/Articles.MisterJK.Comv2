@@ -77,7 +77,7 @@ useEffect(() => {
   // Navigation links data
   const navLinks = [
     { href: "https://misterjk.com", label: "Home" },
-    { href: "https://misterjk.com/link", label: "LinqUp" },
+    { href: "https://misterjk.com/link", label: "Discover" },
     { href: "https://misterjk.com/bts", label: "BTS" },
     { href: "https://lyrics.misterjk.com", label: "Lyrics" },
     { href: "/", label: "Blog" },
