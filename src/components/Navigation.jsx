@@ -173,7 +173,7 @@ useEffect(() => {
           }`}>
             <div className="flex items-center space-x-3">
               <img
-                src="/favicon.png"
+                src="/1favicon.png"
                 alt="MRJK"
                 className="h-8 w-auto"
                 loading="eager"
