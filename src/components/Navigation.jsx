@@ -95,7 +95,7 @@ useEffect(() => {
             {/* Logo/Favicon - Full height with padding */}
             <div className="flex-shrink-0 mr-2 h-full flex items-center">
               <img
-                src="/favicon.png"
+                src="/1favicon.png"
                 alt="MRJK"
                 className="h-full w-auto cursor-pointer py-1"
                 loading="eager"
@@ -180,7 +180,7 @@ useEffect(() => {
           }`}>
             <div className="flex items-center space-x-3">
               <img
-                src="/favicon.png"
+                src="/1favicon.png"
                 alt="MRJK"
                 className="h-8 w-auto"
                 loading="eager"
