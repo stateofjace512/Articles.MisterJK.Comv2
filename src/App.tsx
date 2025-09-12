@@ -3,6 +3,7 @@ import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import ArticlesHomePage from './pages/ArticlesHomePage';
 import NotFound from './pages/NotFound';
 import TNGFixer from './components/TNGFixer';
+import Footer from './components/Footer';
 
 // Import all song components
 import TSTT from './pages/page/TSTT.jsx';
