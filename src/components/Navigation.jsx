@@ -4,7 +4,6 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function Navigation() {
   const [isDark, setIsDark] = useState(false);
-  const [currentPath, setCurrentPath] = useState("");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // --- helpers for cookies ---
@@ -16,11 +15,6 @@ export default function Navigation() {
     const match = document.cookie.match(/(?:^|; )theme=([^;]*)/);
     return match ? match[1] : null;
   };
-
-  // Get current path
-  useEffect(() => {
-    setCurrentPath(window.location.pathname);
-  }, []);
 
   // Initialize theme
   useEffect(() => {
@@ -41,25 +35,25 @@ export default function Navigation() {
     return () => mql.removeEventListener("change", handleChange);
   }, []);
 
-// Lock body scroll when mobile menu is open
-useEffect(() => {
-  if (isMobileMenuOpen) {
-    document.body.classList.add("overflow-hidden");
-  } else {
-    document.body.classList.remove("overflow-hidden");
-  }
-}, [isMobileMenuOpen]);
-
-useEffect(() => {
-  const handleResize = () => {
-    if (window.innerWidth >= 768) {
-      setIsMobileMenuOpen(false);
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.classList.add("overflow-hidden");
+    } else {
       document.body.classList.remove("overflow-hidden");
     }
-  };
-  window.addEventListener("resize", handleResize);
-  return () => window.removeEventListener("resize", handleResize);
-}, []);
+  }, [isMobileMenuOpen]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setIsMobileMenuOpen(false);
+        document.body.classList.remove("overflow-hidden");
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   // Toggle theme
   const toggleTheme = () => {
@@ -80,7 +74,7 @@ useEffect(() => {
     { href: "https://misterjk.com/link", label: "Discover" },
     { href: "https://misterjk.com/bts", label: "BTS" },
     { href: "https://lyrics.misterjk.com", label: "Lyrics" },
-    { href: "/", label: "Blog" },
+    { href: "https://blog.misterjk.com", label: "Blog" },
   ];
 
   return (

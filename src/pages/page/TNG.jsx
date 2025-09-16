@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Navigation from "../../components/Navigation.jsx";
 import Footer from "../../components/Footer.jsx";
+import NoiseBackground from "../../components/NoiseBackground.jsx";
+import EmbossedButton from "../../components/EmbossedButton.jsx";
 
 export default function ArticlesBlogsPage() {
   const [currentArticle, setCurrentArticle] = useState(0);
@@ -88,27 +90,7 @@ export default function ArticlesBlogsPage() {
 
   return (
     <div className="min-h-screen relative overflow-hidden">
-      {/* Paper / subtle noise background */}
-      <div
-        aria-hidden
-        className="absolute inset-0"
-        style={{
-          background: "radial-gradient(1200px 800px at 20% -10%, rgba(0,0,0,0.06), transparent 60%), radial-gradient(1000px 700px at 110% 10%, rgba(0,0,0,0.05), transparent 55%), linear-gradient(180deg, #f9fafb 0%, #f3f4f6 100%)"
-        }}
-      />
-      <svg
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 mix-blend-multiply opacity-20"
-      >
-        <filter id="noiseFilter">
-          <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" stitchTiles="stitch" />
-          <feColorMatrix type="saturate" values="0" />
-          <feComponentTransfer>
-            <feFuncA type="table" tableValues="0 0.015" />
-          </feComponentTransfer>
-        </filter>
-        <rect width="100%" height="100%" filter="url(#noiseFilter)" />
-      </svg>
+      <NoiseBackground />
 
       {/* Navigation */}
       <Navigation />
@@ -169,25 +151,27 @@ export default function ArticlesBlogsPage() {
 
             {/* Navigation Buttons */}
             <div className="flex justify-between items-center">
-              <button
+              <EmbossedButton
+                as="button"
                 onClick={handlePrevious}
                 disabled={currentArticle === 0}
-                className={`inline-flex items-center justify-center rounded-md border border-neutral-300 bg-gradient-to-b from-white to-neutral-200 text-neutral-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.85),0_2px_6px_rgba(0,0,0,0.12)] active:shadow-inner active:translate-y-px focus:outline-none focus:ring-2 focus:ring-blue-500/60 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 px-4 py-2 text-sm font-semibold ${currentArticle === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                className="px-4 py-2 text-sm"
               >
                 <span>← Previous</span>
-              </button>
-              
+              </EmbossedButton>
+
               <span className="text-sm text-neutral-600">
-                Article {currentArticle + 1} of 12
+                Article {currentArticle + 1} of {articles.length}
               </span>
-              
-              <button
+
+              <EmbossedButton
+                as="button"
                 onClick={handleNext}
                 disabled={currentArticle === articles.length - 1}
-                className={`inline-flex items-center justify-center rounded-md border border-neutral-300 bg-gradient-to-b from-white to-neutral-200 text-neutral-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.85),0_2px_6px_rgba(0,0,0,0.12)] active:shadow-inner active:translate-y-px focus:outline-none focus:ring-2 focus:ring-blue-500/60 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 px-4 py-2 text-sm font-semibold ${currentArticle === articles.length - 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                className="px-4 py-2 text-sm"
               >
                 <span>Next →</span>
-              </button>
+              </EmbossedButton>
             </div>
           </div>
           <Footer />

@@ -1,6 +1,8 @@
 import React from "react";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
+import NoiseBackground from "../components/NoiseBackground";
+import EmbossedButton from "../components/EmbossedButton";
 
 export default function NotFound() {
   const handleBack = (e) => {
@@ -14,33 +16,7 @@ export default function NotFound() {
 
   return (
     <div className="min-h-screen relative overflow-hidden">
-      {/* Paper / subtle noise background */}
-      <div
-        aria-hidden
-        className="absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(1200px 800px at 20% -10%, rgba(0,0,0,0.06), transparent 60%), radial-gradient(1000px 700px at 110% 10%, rgba(0,0,0,0.05), transparent 55%), linear-gradient(180deg, #f9fafb 0%, #f3f4f6 100%)",
-        }}
-      />
-      <svg
-        aria-hidden
-        className="pointer-events-none absolute inset-0 mix-blend-multiply opacity-20"
-      >
-        <filter id="noiseFilter">
-          <feTurbulence
-            type="fractalNoise"
-            baseFrequency="0.8"
-            numOctaves="4"
-            stitchTiles="stitch"
-          />
-          <feColorMatrix type="saturate" values="0" />
-          <feComponentTransfer>
-            <feFuncA type="table" tableValues="0 0.015" />
-          </feComponentTransfer>
-        </filter>
-        <rect width="100%" height="100%" filter="url(#noiseFilter)" />
-      </svg>
+      <NoiseBackground />
 
       {/* Navigation */}
       <Navigation />
@@ -64,14 +40,11 @@ export default function NotFound() {
                 </p>
 
                 {/* Embossed bubble button */}
-                <button
-                  onClick={handleBack}
-                  className="inline-flex items-center justify-center rounded-md border border-neutral-300 bg-gradient-to-b from-white to-neutral-200 text-neutral-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.85),0_2px_6px_rgba(0,0,0,0.12)] active:shadow-inner active:translate-y-px focus:outline-none focus:ring-2 focus:ring-blue-500/60 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 px-8 py-4 text-lg font-semibold"
-                >
+                <EmbossedButton as="button" onClick={handleBack} className="px-8 py-4 text-lg">
                   <span className="link-text-black-to-rainbow">
                     ← Return Home
                   </span>
-                </button>
+                </EmbossedButton>
               </div>
             </div>
           </div>

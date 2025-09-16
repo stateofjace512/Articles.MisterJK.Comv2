@@ -1,6 +1,8 @@
 import React from 'react';
 import Navigation from './Navigation';
-import { ArrowRight, ArrowLeft, ExternalLink } from 'lucide-react';
+import { ArrowLeft, ExternalLink } from 'lucide-react';
+import NoiseBackground from "./NoiseBackground";
+import EmbossedButton from "./EmbossedButton";
 
 export default function SongPage({
   title,
@@ -16,34 +18,7 @@ export default function SongPage({
 }) {
   return (
     <div className="min-h-screen relative overflow-hidden">
-      {/* Paper / subtle noise background */}
-      <div
-        aria-hidden
-        className="absolute inset-0"
-        style={{
-          background:
-            'radial-gradient(1200px 800px at 20% -10%, rgba(0,0,0,0.06), transparent 60%), radial-gradient(1000px 700px at 110% 10%, rgba(0,0,0,0.05), transparent 55%), linear-gradient(180deg, #f9fafb 0%, #f3f4f6 100%)',
-        }}
-      />
-
-      <svg
-        aria-hidden
-        className="pointer-events-none absolute inset-0 mix-blend-multiply opacity-20"
-      >
-        <filter id="noiseFilter">
-          <feTurbulence
-            type="fractalNoise"
-            baseFrequency="0.8"
-            numOctaves="4"
-            stitchTiles="stitch"
-          />
-          <feColorMatrix type="saturate" values="0" />
-          <feComponentTransfer>
-            <feFuncA type="table" tableValues="0 0.015" />
-          </feComponentTransfer>
-        </filter>
-        <rect width="100%" height="100%" filter="url(#noiseFilter)" />
-      </svg>
+      <NoiseBackground />
 
       <Navigation />
 
@@ -52,18 +27,18 @@ export default function SongPage({
           {/* Button row */}
           <div className="mb-6 flex gap-4 items-center">
             {/* Home button */}
-            <EmbossedLink
+            <EmbossedButton
               href="https://misterjk.com/"
-              className="inline-flex items-center space-x-2"
+              className="px-4 py-2 text-sm space-x-2"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Return Home</span>
-            </EmbossedLink>
-      
+            </EmbossedButton>
+
             {/* Lyrics button */}
-            <EmbossedLink href="/" className="inline-flex items-center space-x-2">
+            <EmbossedButton href="/" className="px-4 py-2 text-sm space-x-2">
               <span>View All Lyrics</span>
-            </EmbossedLink>
+            </EmbossedButton>
           </div>
           {/* Main content card */}
           <div className="rounded-2xl border border-neutral-300 bg-gradient-to-b from-white to-neutral-100 shadow-[0_10px_30px_rgba(0,0,0,0.15)] ring-1 ring-black/5 p-6 md:p-10">
@@ -103,16 +78,16 @@ export default function SongPage({
                 {/* Action buttons */}
                 <div className="flex flex-wrap gap-3">
                   {listenUrl && (
-                    <EmbossedLink href={listenUrl} external>
+                    <EmbossedButton href={listenUrl} external className="px-4 py-2 text-sm">
                       <ExternalLink className="w-4 h-4 mr-2" />
                       Listen Now
-                    </EmbossedLink>
+                    </EmbossedButton>
                   )}
 
                   {isAlbumTrack && albumSlug && (
-                    <EmbossedLink href={`/album/${albumSlug}`}>
+                    <EmbossedButton href={`/album/${albumSlug}`} className="px-4 py-2 text-sm">
                       View Full Album
-                    </EmbossedLink>
+                    </EmbossedButton>
                   )}
                 </div>
               </div>
@@ -154,28 +129,5 @@ export default function SongPage({
         </div>
       </main>
     </div>
-  );
-}
-
-function EmbossedLink({ href, children, external = false, className = '' }) {
-  const base =
-    'inline-flex items-center justify-center rounded-md border border-neutral-300 ' +
-    'bg-gradient-to-b from-white to-neutral-200 text-neutral-900 ' +
-    'shadow-[inset_0_1px_0_rgba(255,255,255,0.85),0_2px_6px_rgba(0,0,0,0.12)] ' +
-    'active:shadow-inner active:translate-y-px focus:outline-none focus:ring-2 focus:ring-blue-500/60 ' +
-    'transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 ' +
-    'px-4 py-2 text-sm font-semibold';
-
-  if (external) {
-    return (
-      <a href={href} target="_blank" rel="noopener noreferrer" className={`${base} ${className}`}>
-        {children}
-      </a>
-    );
-  }
-  return (
-    <a href={href} className={`${base} ${className}`}>
-      {children}
-    </a>
   );
 }
