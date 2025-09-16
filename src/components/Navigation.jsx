@@ -72,7 +72,6 @@ export default function Navigation() {
   const navLinks = [
     { href: "https://misterjk.com", label: "Home" },
     { href: "https://misterjk.com/link", label: "Discover" },
-    { href: "https://misterjk.com/bts", label: "BTS" },
     { href: "https://lyrics.misterjk.com", label: "Lyrics" },
     { href: "https://blog.misterjk.com", label: "Blog" },
   ];
