@@ -5,8 +5,6 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 export default function Navigation() {
   const [isDark, setIsDark] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  // --- helpers for cookies ---
   const setThemeCookie = (theme) => {
     document.cookie = `theme=${theme}; path=/; domain=.misterjk.com; max-age=31536000; SameSite=Lax; Secure`;
   };
@@ -16,7 +14,6 @@ export default function Navigation() {
     return match ? match[1] : null;
   };
 
-  // Initialize theme
   useEffect(() => {
     const savedTheme = getThemeCookie();
     const mql = window.matchMedia("(prefers-color-scheme: dark)");
@@ -35,7 +32,6 @@ export default function Navigation() {
     return () => mql.removeEventListener("change", handleChange);
   }, []);
 
-  // Lock body scroll when mobile menu is open
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.classList.add("overflow-hidden");
@@ -55,20 +51,17 @@ export default function Navigation() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Toggle theme
   const toggleTheme = () => {
     const newTheme = !isDark;
     setIsDark(newTheme);
     document.documentElement.classList.toggle("dark-mode", newTheme);
     setThemeCookie(newTheme ? "dark" : "light");
   };
-
-  // Close mobile menu when clicking on a link
+  
   const handleLinkClick = () => {
     setIsMobileMenuOpen(false);
   };
 
-  // Navigation links data
   const navLinks = [
     { href: "https://misterjk.com", label: "Home" },
     { href: "https://misterjk.com/discover", label: "Discover" },
@@ -96,7 +89,6 @@ export default function Navigation() {
               />
             </div>
 
-            {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-6 overflow-x-auto">
               {navLinks.map((link) => (
                 <a
@@ -111,7 +103,6 @@ export default function Navigation() {
               ))}
             </div>
 
-            {/* Tablet Navigation */}
             <div className="hidden md:flex lg:hidden items-center space-x-3 overflow-x-auto">
               {navLinks.map((link) => (
                 <a
@@ -126,7 +117,6 @@ export default function Navigation() {
               ))}
             </div>
 
-            {/* Mobile Menu Button - Arrow Left with proper skeuomorphic styling */}
             <div className="md:hidden">
               <button
                 onClick={() => setIsMobileMenuOpen(true)}
@@ -145,11 +135,8 @@ export default function Navigation() {
         </div>
       </nav>
 
-      {/* Full Screen Mobile Menu Sliding from Left */}
       <div className={`fixed inset-0 z-50 md:hidden transition-all duration-500 ${isMobileMenuOpen ? 'visible' : 'invisible'}`}>
-
         
-        {/* Full Screen Sliding Menu Panel */}
         <div className={`absolute inset-y-0 right-0 w-full shadow-2xl transform transition-all duration-500 ease-out ${
           isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         } ${
@@ -157,9 +144,7 @@ export default function Navigation() {
             ? 'bg-[#0a0a0a] text-white border-l border-[#1a1a1a]'
             : 'bg-[#fdfdfd] text-[#111] border-l border-[#d1d1d1]'
         }`}>
-
           
-          {/* Header with Close Button */}
           <div className={`flex items-center justify-between p-6 border-b ${
             isDark ? 'border-[#1a1a1a] bg-[#101010]' : 'border-[#d1d1d1] bg-[#ffffff]'
           }`}>
@@ -173,7 +158,6 @@ export default function Navigation() {
               />
             </div>
             
-            {/* Close Button - Arrow Right */}
             <button
               onClick={() => setIsMobileMenuOpen(false)}
               className={`inline-flex items-center justify-center w-12 h-12 rounded-full transition-all duration-300 group focus:outline-none focus:ring-2 focus:ring-blue-500/60 ${
@@ -186,8 +170,7 @@ export default function Navigation() {
               <ChevronRight className="w-7 h-7 transition-transform duration-200 group-hover:scale-110" />
             </button>
           </div>
-          
-          {/* Menu content */}
+
           <div className="p-6 space-y-2 mt-4">
             {navLinks.map((link, index) => (
               <a
@@ -203,7 +186,6 @@ export default function Navigation() {
                   animationDelay: `${index * 100}ms`
                 }}
               >
-                {/* Hover shimmer effect */}
                 <div className={`absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ${
                   isDark 
                     ? 'bg-gradient-to-r from-transparent via-white/10 to-transparent'
@@ -220,7 +202,6 @@ export default function Navigation() {
         </div>
       </div>
 
-      {/* Custom styles for animations */}
       <style jsx>{`
         @keyframes slide-in {
           from {
