@@ -150,7 +150,7 @@ export default function Navigation() {
           }`}>
             <div className="flex items-center space-x-3">
               <img
-                src="/1favicon.png"
+                src="https://misterjk.com/site-assets/site_logo.png"
                 alt="MRJK"
                 className="h-8 w-auto"
                 loading="eager"
