@@ -44,7 +44,7 @@ export default function Footer() {
         <div className="border-t border-neutral-300 w-full" />
         <p className="flex items-center justify-center gap-2 text-xs text-neutral-700 leading-relaxed">
           <img
-            src="/record_label.png"
+            src="https://misterjk.com/site-assets/record_label.png"
             alt="Record Label logo"
             className="h-4 w-auto inline-block"
           />
