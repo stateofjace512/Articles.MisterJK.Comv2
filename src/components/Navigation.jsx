@@ -85,10 +85,9 @@ export default function Navigation() {
       }`}>
         <div className="max-w-6xl mx-auto px-3 sm:px-4 lg:px-8">
           <div className="flex justify-between items-center h-14 sm:h-16">
-            {/* Logo/Favicon - Full height with padding */}
             <div className="flex-shrink-0 mr-2 h-full flex items-center">
               <img
-                src="/1favicon.png"
+                src="https://misterjk.com/site-assets/site_logo.png"
                 alt="MRJK"
                 className="h-full w-auto cursor-pointer py-1"
                 loading="eager"
