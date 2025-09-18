@@ -11,7 +11,7 @@ export default function ArticlesBlogsPage() {
       isNew: true,
       description: 'Articles and insights about Georgia Wixen\'s upcoming album',
       path: '/page/tstt/',
-      cover: 'https://i.postimg.cc/XnzbZ5kp/TSSTCDFRONTEDIT.jpg',
+      cover: 'https://misterjk.com/site-assets/images/maxres/gather/format=jpg&name=3000x3000/GW_12012_FINAL_CORRECTED.jpg',
       alt: 'The Sweet Tea Tragedies cover',
       comingSoon: false
     },
@@ -20,8 +20,8 @@ export default function ArticlesBlogsPage() {
       isNew: false,
       description: 'Behind-the-scenes stories and articles about The Nice Girls',
       path: '/page/tng/',
-      cover: 'https://s3.amazonaws.com/gather.fandalism.com/800x800%2D9759764%2D%2D0C6CDD92%2D888F%2D4153%2D8D22A7371C7CA986%2D%2D0%2D%2D6081121%2D%2Dedit5%2Ejpg',
-      alt: 'The Nice Girls Diamond Edition cover',
+      cover: 'https://misterjk.com/site-assets/images/maxres/gather/format=jpg&name=3000x3000/TNG_9981F_FINAL_CORRECTION.jpg',
+      alt: 'The Nice Girls cover',
       comingSoon: false
     }
   ];
