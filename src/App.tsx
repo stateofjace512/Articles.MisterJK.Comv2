@@ -8,6 +8,7 @@ import Footer from './components/Footer';
 // Import all song components
 import TSTT from './pages/page/TSTT.jsx';
 import TNG from './pages/page/TNG.jsx';
+import DiscographySearch from './pages/DiscographySearch.jsx';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/" element={<ArticlesHomePage />} />
         <Route path="/page/tng/" element={<TNG />} />
         <Route path="/page/tstt/" element={<TSTT />} />
+        <Route path="/discography/" element={<DiscographySearch />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

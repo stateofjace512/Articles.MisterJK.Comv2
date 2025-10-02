@@ -7,8 +7,17 @@ import NoiseBackground from "../components/NoiseBackground";
 export default function ArticlesBlogsPage() {
   const blogSections = [
     {
-      title: 'The Sweet Tea Tragedies',
+      title: 'Discography Searcher',
       isNew: true,
+      description: 'Instantly search and filter the entire MRJK discography.',
+      path: '/discography/',
+      cover: 'https://misterjk.com/site-assets/site_logo.png',
+      alt: 'Discography search interface',
+      comingSoon: false
+    },
+    {
+      title: 'The Sweet Tea Tragedies',
+      isNew: false,
       description: 'Articles and insights about Georgia Wixen\'s upcoming album',
       path: '/page/tstt/',
       cover: 'https://misterjk.com/site-assets/images/maxres/gather/format=jpg&name=3000x3000/GW_12012_FINAL_CORRECTED.jpg',
