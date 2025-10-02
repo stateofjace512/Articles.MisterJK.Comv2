@@ -5,6 +5,12 @@
     <link rel="icon" type="image/png" href="https://misterjk.com/site-assets/favicon_logo.png/" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blog at MRJK</title>
+    <script>
+      const targetUrl = "https://misterjk.com/blog";
+      if (!window.location.href.startsWith(targetUrl)) {
+        window.location.replace(targetUrl);
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
